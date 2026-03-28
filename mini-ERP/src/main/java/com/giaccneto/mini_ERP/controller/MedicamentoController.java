@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/medicamentos")
@@ -18,32 +19,36 @@ public class MedicamentoController {
     }
 
     @PostMapping
-    public ResponseEntity<Medicamento> criarMedicamento(@RequestBody Medicamento medicamento){
+    public ResponseEntity<Medicamento> criarMedicamento(@RequestBody Medicamento medicamento) {
         return ResponseEntity.ok(medicamentoService.criarMedicamento(medicamento));
     }
 
     @GetMapping
-    public  ResponseEntity<List<Medicamento>> listarMedicamentos(){
+    public ResponseEntity<List<Medicamento>> listarMedicamentos() {
         List<Medicamento> medicamentos = medicamentoService.buscarMedicamentos();
         return ResponseEntity.ok(medicamentos);
     }
 
     @GetMapping("/buscar")
-    public ResponseEntity<Medicamento> buscarPorNome(@RequestParam String nomeMedicamento){
+    public ResponseEntity<Medicamento> buscarPorNome(@RequestParam String nomeMedicamento) {
         return ResponseEntity.ok(medicamentoService.buscaMedicamentoPorNome(nomeMedicamento));
     }
+
     @DeleteMapping("/delete")
-    public ResponseEntity<Void> deletePorNome(@RequestParam String nomeMedicamento){
+    public ResponseEntity<Void> deletePorNome(@RequestParam String nomeMedicamento) {
         medicamentoService.deletePorNome(nomeMedicamento);
         return ResponseEntity.ok().build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Medicamento> atualizarMedicamento(
+    public ResponseEntity<Medicamento> atualizarProduto(
             @PathVariable Long id,
             @RequestBody Medicamento medicamentoAtualizado) {
 
-        return medicamentoService.atualizarMedicamento(id, medicamentoAtualizado)
+        Optional<Medicamento> produtoAtualizado =
+                medicamentoService.atualizarMedicamento(id, medicamentoAtualizado);
+
+        return produtoAtualizado
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }

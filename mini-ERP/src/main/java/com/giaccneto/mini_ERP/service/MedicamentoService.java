@@ -41,23 +41,19 @@ public class MedicamentoService {
 
     }
 
-    public Optional<Medicamento> atualizarMedicamento(Long id, Medicamento dadosAtualizados) {
+    public Optional<Medicamento> atualizarMedicamento(Long id, Medicamento medicamentoAtualizado) {
 
-        Optional<Medicamento> medicamentoExistente = medicamentoRepository.findById(id);
+        return medicamentoRepository.findById(id)
+                .map(medicamento -> {
 
-        if (medicamentoExistente.isPresent()) {
-            Medicamento med = medicamentoExistente.get();
+                    medicamento.setNomeMedicamento(medicamentoAtualizado.getNomeMedicamento());
+                    medicamento.setLaboratorio(medicamentoAtualizado.getLaboratorio());
+                    medicamento.setDescricaoMedicamento(medicamentoAtualizado.getDescricaoMedicamento());
+                    medicamento.setQuantidadeEstoque(medicamentoAtualizado.getQuantidadeEstoque());
+                    medicamento.setPreco(medicamentoAtualizado.getPreco());
+                    medicamento.setDataValidade(medicamentoAtualizado.getDataValidade());
 
-            med.setNomeMedicamento(dadosAtualizados.getNomeMedicamento());
-            med.setLaboratorio(dadosAtualizados.getLaboratorio());
-            med.setDescricaoMedicamento(dadosAtualizados.getDescricaoMedicamento());
-            med.setQuantidadeEstoque(dadosAtualizados.getQuantidadeEstoque());
-            med.setPreco(dadosAtualizados.getPreco());
-            med.setDataValidade(dadosAtualizados.getDataValidade());
-
-            return Optional.of(medicamentoRepository.save(med));
-        }
-
-        return Optional.empty();
+                    return medicamentoRepository.save(medicamento);
+                });
     }
 }
