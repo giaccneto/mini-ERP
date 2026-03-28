@@ -37,4 +37,14 @@ public class MedicamentoController {
         medicamentoService.deletePorNome(nomeMedicamento);
         return ResponseEntity.ok().build();
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Medicamento> atualizarMedicamento(
+            @PathVariable Long id,
+            @RequestBody Medicamento medicamentoAtualizado) {
+
+        return medicamentoService.atualizarMedicamento(id, medicamentoAtualizado)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
 }
