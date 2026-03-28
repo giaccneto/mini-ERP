@@ -27,4 +27,14 @@ public class MedicamentoController {
         List<Medicamento> medicamentos = medicamentoService.buscarMedicamentos();
         return ResponseEntity.ok(medicamentos);
     }
+
+    @GetMapping("/buscar")
+    public ResponseEntity<Medicamento> buscarPorNome(@RequestParam String nomeMedicamento){
+        return ResponseEntity.ok(medicamentoService.buscaMedicamentoPorNome(nomeMedicamento));
+    }
+    @DeleteMapping("/delete")
+    public ResponseEntity<Void> deletePorNome(@RequestParam String nomeMedicamento){
+        medicamentoService.deletePorNome(nomeMedicamento);
+        return ResponseEntity.ok().build();
+    }
 }

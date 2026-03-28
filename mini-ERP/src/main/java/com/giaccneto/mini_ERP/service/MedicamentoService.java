@@ -2,7 +2,6 @@ package com.giaccneto.mini_ERP.service;
 
 import com.giaccneto.mini_ERP.entity.Medicamento;
 import com.giaccneto.mini_ERP.repository.MedicamentoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,8 +16,6 @@ public class MedicamentoService {
         this.medicamentoRepository = medicamentoRepository;
     }
 
-
-
     public Medicamento criarMedicamento(Medicamento medicamento){
 
         return medicamentoRepository.save(medicamento);
@@ -26,5 +23,20 @@ public class MedicamentoService {
 
     public List<Medicamento> buscarMedicamentos(){
         return medicamentoRepository.findAll();
+    }
+
+    public Medicamento buscaMedicamentoPorNome(String nomeMedicamento){
+        try{
+            return medicamentoRepository.findByNomeMedicamento(nomeMedicamento).orElseThrow(
+                    ()-> new RuntimeException("Medicamento não encontrado" + nomeMedicamento));
+
+        } catch (RuntimeException e) {
+            throw new RuntimeException("Medicamento não encontrado " + e);
+        }
+    }
+
+    public void deletePorNome(String nomeMedicamento){
+        medicamentoRepository.deleteByNomeMedicamento(nomeMedicamento);
+
     }
 }
