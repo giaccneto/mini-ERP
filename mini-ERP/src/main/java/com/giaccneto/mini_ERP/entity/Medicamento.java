@@ -30,7 +30,9 @@ public class Medicamento {
         this.dataValidade = dataValidade;
     }
 
-    public Medicamento(){}
+    public Medicamento() {
+    }
+
     public Long getId() {
         return id;
     }
