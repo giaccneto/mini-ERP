@@ -20,6 +20,7 @@ public class Medicamento {
     private double preco;
     private LocalDate dataValidade;
 
+
     public Medicamento(Long id, String nomeMedicamento, String laboratorio, String descricaoMedicamento, int quantidadeEstoque, double preco, LocalDate dataValidade) {
         this.id = id;
         this.nomeMedicamento = nomeMedicamento;
